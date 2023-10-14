@@ -29,4 +29,6 @@ app.listen(port, () => {
 );
 
 
-app.get
+app.get('/getAllPayment', (req, res) =>{
+    res.send('Hello World');
+});
