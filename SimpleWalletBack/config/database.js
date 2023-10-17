@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+require('dotenv').config();
 
-const dbURI = "mongodb+srv://admin:<admin>@atlascluster.qgnpu2r.mongodb.net/?retryWrites=true&w=majority";
+const dbURI = process.env.DBURI;
+
 
 mongoose.connect( dbURI,
     { useNewUrlParser: true, 
@@ -10,6 +12,7 @@ mongoose.connect( dbURI,
 const db = mongoose.connection;
 
 db.on('error', (err) => {
+    console.log(dbURI)
     console.error('error connecing to MongoDB: ', err);
 });
 
