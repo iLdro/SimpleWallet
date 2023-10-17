@@ -2,8 +2,9 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const UserModel = require('../models/userModel');
+const { verifyToken, generateToken } = require('../utils/jwt');
 
-router.post('/CreateUser', async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
       console.log('req.body:', req.body)
       const { userName, email, password } = req.body;
@@ -24,7 +25,7 @@ router.post('/CreateUser', async (req, res) => {
     }
   });
 
-  router.post('/Login', async (req, res) => {
+  router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const user = await UserModel.findOne({ email });
@@ -39,8 +40,9 @@ router.post('/CreateUser', async (req, res) => {
       return res.status(400).json({ error: 'Invalid password' });
     }
     else {
-      return res.status(200).json({ message: 'Logged in successfully' });
-      //generate token 
+      const token = generateToken(user);
+      res.cookie('token', token, { httpOnly: true });
+      res.status(200).json({ message: 'Login successful' });
     } 
 
   });
