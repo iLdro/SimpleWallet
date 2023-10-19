@@ -2,6 +2,7 @@ import { useState } from "react";
 import React from "react";
 import '../css/addPayement.css'
 import FormData from "../models/PaymentData";
+import axios from "axios";
 
 function AddPayment() {
 
@@ -10,12 +11,22 @@ function AddPayment() {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const payment = {
-            user : e.currentTarget.user.value,
+            user : "652e8f2d0e15c03b283c8cc1",
             amount : e.currentTarget.amount.value,
             description : e.currentTarget.description.value,
             date : e.currentTarget.date.value,
             category : e.currentTarget.category.value,
             currency : e.currentTarget.currency.value
+        };
+        const dateParts = e.currentTarget.date.value.split("/");
+        const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+
+        const paymentGraph = {
+            id: "652e8f2d0e15c03b283c8cc1",
+            data: [{
+                y: dateObject,
+                x: 0,
+            }],
         };
         alert("Payment added");
         if (payment.user == "" || payment.amount == 0 || payment.description == "" || payment.category == "" || payment.currency == "") {
@@ -47,6 +58,12 @@ function AddPayment() {
         }
 
         setPayements([...payements, payment]);
+        axios.post('http://localhost:3000/SaveGraph', paymentGraph)
+        .then((response) => {
+            console.log(response);
+        }, (error) => {
+            console.log(error);
+        });
 
     }
 

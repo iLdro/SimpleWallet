@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const UserModel = require('../models/userModel');
+const DataGraph = require('../models/graphModel');
+const cors = require('cors');
+
+
 
 router.post('/CreateUser', async (req, res) => {
     try {
@@ -24,7 +28,7 @@ router.post('/CreateUser', async (req, res) => {
     }
   });
 
-  router.post('/Login', async (req, res) => {
+router.post('/Login', async (req, res) => {
     const { email, password } = req.body;
 
     const user = await UserModel.findOne({ email });
@@ -43,6 +47,8 @@ router.post('/CreateUser', async (req, res) => {
       //generate token 
     } 
 
-  });
-  
-  module.exports = router;
+});
+
+
+
+module.exports = router;

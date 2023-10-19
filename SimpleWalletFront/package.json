@@ -10,10 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@nivo/core": "^0.72.0",
-    "@nivo/line": "^0.72.0",
-    "coreui": "^0.4.2-alpha2",
-    "react": "^18.2.0",
+    "axios": "^1.5.1",
+    "react": "^18.0.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.16.0",
     "switch": "^0.0.0"

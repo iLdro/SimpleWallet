@@ -8,7 +8,7 @@ import LoginPage from './pages/loginPage.tsx'
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <LoginPage/>
+    <AddPayment/>
     
-    <PageGraph/>
   </React.StrictMode>,
 )
