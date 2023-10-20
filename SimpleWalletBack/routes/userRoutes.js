@@ -5,8 +5,6 @@ const UserModel = require('../models/userModel');
 const DataGraph = require('../models/graphModel');
 const cors = require('cors');
 
-
-
 router.post('/CreateUser', async (req, res) => {
     try {
       console.log('req.body:', req.body)

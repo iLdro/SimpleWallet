@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const DataPointSchema = new mongoose.Schema({
     id: String,
-    data: [{
+    datas: [{
         y: Date,
         x: Number
     }]

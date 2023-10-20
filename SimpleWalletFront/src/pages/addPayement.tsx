@@ -23,12 +23,14 @@ function AddPayment() {
 
         const paymentGraph = {
             id: "652e8f2d0e15c03b283c8cc1",
-            data: [{
+            datas: [{
                 y: dateObject,
-                x: 0,
+                x: e.currentTarget.amount.value,
             }],
         };
         alert("Payment added");
+        console.log(paymentGraph);
+        
         if (payment.user == "" || payment.amount == 0 || payment.description == "" || payment.category == "" || payment.currency == "") {
             alert("Please fill all the fields");
             return;
@@ -60,6 +62,7 @@ function AddPayment() {
         setPayements([...payements, payment]);
         axios.post('http://localhost:3000/SaveGraph', paymentGraph)
         .then((response) => {
+            console.log("RESPONSE")
             console.log(response);
         }, (error) => {
             console.log(error);

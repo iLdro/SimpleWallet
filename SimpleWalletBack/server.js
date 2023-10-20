@@ -39,30 +39,34 @@ app.listen(port, () => {
 app.post('/SaveGraph', async (req, res) => {
   try {
     console.log('req.body:', req.body)
-    const { id, data } = req.body;
+    const { id, datas } = req.body;
     let graph = await DataGraph.findOne({id});
     if (graph){
       console.log('Graph exists')
-      graph.data.push({data});
-    } else {
+      // Ensure datas is an object, not an array
+      for (let data of datas) {
+        graph.datas.push(data);
+      }
+      console.log(datas)
+    } 
+    else {
       console.log('Creating new graph')
       graph = new DataGraph({ 
         id,
-        data
+        datas
       });
     }
     await graph.save({ w: 'majority' });
+    console.log('Graph saved')
 
-
-
-
-    res.status(201).json(graph);
+    res.status(201).json(datas);
   } 
   catch (error) {
     console.error('Error creating a graph:', error);
     res.status(500).json({ error: 'Error creating a graph' });
   }
 });
+
 
 app.get('/getAllPayment', (req, res) =>{
     res.send('Hello World');
