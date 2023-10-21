@@ -68,6 +68,21 @@ app.post('/SaveGraph', async (req, res) => {
 });
 
 
-app.get('/getAllPayment', (req, res) =>{
-    res.send('Hello World');
+
+app.get('/getDataGraph', async (req, res) => {
+    try {
+      const { id } = req.query;
+      console.log('Requested ID:', id);
+      const graph = await DataGraph.findOne({ id });
+      if (graph) {
+        console.log(graph);
+        res.status(200).json(graph);
+      } else {
+        console.log('Graph not found');
+        res.status(404).json({ error: 'Graph not found' });
+      }
+    } catch (error) {
+      console.error('Error getting a graph data:', error);
+      res.status(500).json({ error: 'Error getting a graph data' });
+  }    
 });

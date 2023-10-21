@@ -2,8 +2,11 @@ import React from "react";
 import { ResponsiveLine } from "@nivo/line";
 //import Graph from "../component/Graph"; 
 import PropType from 'prop-types'
+import axios from 'axios';
+
 
 function PageGraph() {
+    const id = "652e8f2d0e15c03b283c8cc1";
     const graphStyle = {
         width: "800px",
         height: "400px",
@@ -14,7 +17,19 @@ function PageGraph() {
             textColor: "#333" // Specify the text color
           }
       };
-
+    axios.get('http://localhost:3000/getDataGraph?id=' + id)
+      .then((response) => {
+        console.log("RESPONSE FETCH DATA GRAPH")
+        console.log(response.data);
+        const backData = response.data;
+        const rawData = backData.datas.map((item: {  y: Date , x: number }) => [item.y, item.x]);
+        console.log("RAW DATA");
+        console.log(rawData);
+      }, (error) => {
+        console.log(error);
+      });
+    
+    
     const barData = [{
         "id": "japan",
        
