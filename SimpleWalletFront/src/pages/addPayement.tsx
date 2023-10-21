@@ -10,64 +10,68 @@ function AddPayment() {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const payment = {
-            user : "652e8f2d0e15c03b283c8cc1",
-            amount : e.currentTarget.amount.value,
-            description : e.currentTarget.description.value,
-            date : e.currentTarget.date.value,
-            category : e.currentTarget.category.value,
-            currency : e.currentTarget.currency.value
-        };
         const dateParts = e.currentTarget.date.value.split("/");
-        const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+        if (dateParts[1] < 1 || dateParts[1] > 12) {
+            console.error('Invalid month value');
+            alert("Please enter a valid month");
+        } else {
+            const dateParts = e.currentTarget.date.value.split("/");
+            const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+            const payment = {
+                user : "652e8f2d0e15c03b283c8cc1",
+                amount : e.currentTarget.amount.value,
+                description : e.currentTarget.description.value,
+                date : e.currentTarget.date.value,
+                category : e.currentTarget.category.value,
+                currency : e.currentTarget.currency.value,
+                id: "652e8f2d0e15c03b283c8cc1",
+                datas: [{
+                    y: dateObject,
+                    x: e.currentTarget.amount.value,
+                }],
+            };
 
-        const paymentGraph = {
-            id: "652e8f2d0e15c03b283c8cc1",
-            datas: [{
-                y: dateObject,
-                x: e.currentTarget.amount.value,
-            }],
-        };
-        alert("Payment added");
-        console.log(paymentGraph);
+            alert("Payment added");
         
-        if (payment.user == "" || payment.amount == 0 || payment.description == "" || payment.category == "" || payment.currency == "") {
-            alert("Please fill all the fields");
-            return;
-        }
-        else {
-            payment.user = payment.user.toString();
-            payment.description = payment.description.toString();
-            payment.category = payment.category.toString();
-            payment.currency = payment.currency.toString();
-        }
+            
+            if (payment.user == "" || payment.amount == 0 || payment.description == "" || payment.category == "" || payment.currency == "") {
+                alert("Please fill all the fields");
+                return;
+            }
+            else {
+                payment.user = payment.user.toString();
+                payment.description = payment.description.toString();
+                payment.category = payment.category.toString();
+                payment.currency = payment.currency.toString();
+            }
 
-        const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-        if (!dateRegex.test(payment.date.toString())) {
-            alert("Please enter a valid date");
-            return;
-        }
-        else {
-            payment.date = new Date(payment.date);
-        }
+            const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+            if (!dateRegex.test(payment.date.toString())) {
+                alert("Please enter a valid date");
+                return;
+            }
+            else {
+                payment.date = new Date(payment.date);
+            }
 
-        if (isNaN(payment.amount) || payment.amount <= 0) {
-            alert("Please enter a valid amount");
-            return;
-        }
-        else {
-            payment.amount = parseFloat(payment.amount.toString());
-        }
+            if (isNaN(payment.amount) || payment.amount <= 0) {
+                alert("Please enter a valid amount");
+                return;
+            }
+            else {
+                payment.amount = parseFloat(payment.amount.toString());
+            }
+        
 
-        setPayements([...payements, payment]);
-        axios.post('http://localhost:3000/SaveGraph', paymentGraph)
-        .then((response) => {
-            console.log("RESPONSE")
-            console.log(response);
-        }, (error) => {
-            console.log(error);
-        });
-
+            setPayements([...payements, payment]);
+            axios.post('http://localhost:3000/SaveGraph', payment)
+            .then((response) => {
+                console.log("RESPONSE")
+                console.log(response);
+            }, (error) => {
+                console.log(error);
+            });
+        }
     }
 
     return (

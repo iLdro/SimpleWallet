@@ -3,10 +3,12 @@ import { ResponsiveLine } from "@nivo/line";
 //import Graph from "../component/Graph"; 
 import PropType from 'prop-types'
 import axios from 'axios';
-
+import { useState } from "react";
 
 function PageGraph() {
     const id = "652e8f2d0e15c03b283c8cc1";
+    const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+
     const graphStyle = {
         width: "800px",
         height: "400px",
@@ -1072,13 +1074,36 @@ function PageGraph() {
     MyResponsiveLine.propTypes = {
         data: PropType.object.isRequired
     };
+    
+    const deleteAllData = () => {
+      axios.post(`http://localhost:3000/clearData/${id}`)
+        .then((response) => {
+          console.log("RESPONSE CLEAR DATA");
+          console.log(response);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+      setShowDeleteConfirmation(false);
+    };
+
+    const handleDeleteClick = () => {
+      setShowDeleteConfirmation(true);
+    };
 
     return (
-  
-        <div style={graphStyle}>
-            <MyResponsiveLine data={barData} />
-        </div>
-  );
-}
+      <div style={graphStyle}>
+        <MyResponsiveLine data={barData} />
+        <button onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
 
+        {showDeleteConfirmation && (
+          <div className="confirmation-modal">
+            <p>Are you sure you want to delete the data?</p>
+            <button onClick={deleteAllData}>Yes</button>
+            <button onClick={() => setShowDeleteConfirmation(false)}>No</button>
+          </div>
+        )}
+      </div>
+    );
+}
 export default PageGraph;

@@ -75,6 +75,7 @@ app.get('/getDataGraph', async (req, res) => {
       console.log('Requested ID:', id);
       const graph = await DataGraph.findOne({ id });
       if (graph) {
+        console.log('Graph found!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!')
         console.log(graph);
         res.status(200).json(graph);
       } else {
@@ -85,4 +86,22 @@ app.get('/getDataGraph', async (req, res) => {
       console.error('Error getting a graph data:', error);
       res.status(500).json({ error: 'Error getting a graph data' });
   }    
+});
+
+
+app.post('/clearData/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    let graph = await DataGraph.findOne({ id });
+    if (graph) {
+      graph.datas = [];
+      await graph.save();
+      res.status(200).json({ message: 'Data cleared successfully' });
+    } else {
+      res.status(404).json({ error: 'Graph not found' });
+    }
+  } catch (error) {
+    console.error('Error clearing data:', error);
+    res.status(500).json({ error: 'Error clearing data' });
+  }
 });
