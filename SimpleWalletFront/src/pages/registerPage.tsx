@@ -1,21 +1,29 @@
-function register() {
+import axios from "axios";
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+function registerPage() {
+
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const user = {
-            username: event.currentTarget.username.value,
-            mail: event.currentTarget.mail.value,
+            userName: event.currentTarget.username.value,
+            email: event.currentTarget.mail.value,
             password: event.currentTarget.password.value
         };
-        alert("Register");
-        if (user.username == "" || user.mail == "" || user.password == "") {
+        if (user.userName == "" || user.email == "" || user.password == "") {
             alert("Please fill all the fields");
             return;
         }
         else {
-            user.username = user.username.toString();
-            user.mail = user.mail.toString();
+            user.userName = user.userName.toString();
+            user.email = user.email.toString();
             user.password = user.password.toString();
+            await axios.post('http://localhost:3000/users/register', user)
+                .then(function () {
+                    alert("User registered successfully");
+                })
+                .catch(function () {
+                    alert("Error registering user");
+                });
         }
     }
 
@@ -38,4 +46,4 @@ function register() {
 }
 
 
-export default register;
+export default registerPage;
