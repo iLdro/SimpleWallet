@@ -1,6 +1,6 @@
 import axios from "axios";
 import Layout from "./layout";
-
+import "../css/registerPage.css"
 function registerPage() {
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
@@ -38,7 +38,7 @@ function registerPage() {
                         <input type="text" name="username" placeholder='username' />
                         <input type="text" name="mail" placeholder='mail' />
                         <input type="text" name="password" placeholder='password'/>
-                        <button type="submit">Submit</button>
+                        <button id = "RegisterButton"type="submit">Submit</button>
                     </form>
                 </div>
             

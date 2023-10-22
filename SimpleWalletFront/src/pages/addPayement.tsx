@@ -12,6 +12,9 @@ function AddPayment() {
     const [category, setCategory] = useState("");
 
     const handleSubmit = ( e : React.FormEvent<HTMLFormElement>) => {
+        console.log("localsotrage");
+        console.log(localStorage.getItem("userId"));
+        const userId = localStorage.getItem("userId");
         e.preventDefault();
         const dateParts = e.currentTarget.date.value.split("/");
         if (dateParts[1] < 1 || dateParts[1] > 12) {
@@ -20,13 +23,14 @@ function AddPayment() {
         } else {
             const dateParts = e.currentTarget.date.value.split("/");
             const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
+            
             const payment = {
                 nameOf : e.currentTarget.nameOf.value,
-                user: "652e8f2d0e15c03b283c8cc1",
+                user: userId,
                 amount: e.currentTarget.amount.value,
                 description: e.currentTarget.description.value,
-                date: e.currentTarget.date.value,
-                category: category, // Updated to use the selected category
+                date: dateObject,
+                category: category, 
                 currency: e.currentTarget.currency.value,
                 id: "652e8f2d0e15c03b283c8cc1",
                 datas: [
@@ -55,13 +59,14 @@ function AddPayment() {
             }
 
             const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
-            if (!dateRegex.test(payment.date.toString())) {
+            const formattedDate = dateObject.toLocaleDateString('en-GB'); // Converts to dd/mm/yyyy format
+            if (!dateRegex.test(formattedDate)) {
                 alert("Please enter a valid date");
                 return;
+            } else {
+                payment.date = dateObject; // Keep the Date object for API request if needed
             }
-            else {
-                payment.date = new Date(payment.date);
-            }
+
 
             if (isNaN(payment.amount) || payment.amount <= 0) {
                 alert("Please enter a valid amount");
@@ -85,9 +90,9 @@ function AddPayment() {
 
     return (
         <div id="container">
-
+        <Layout/>  
         <h1>Add a Payment</h1>
-    
+        
         <form className="grid-form" onSubmit={handleSubmit}>
             <input name="nameOf" id="nameOf" className="form_field" placeholder="name" />
             <input name="amount" id="amount" className="form_field amount_field" placeholder="amount" />
@@ -110,21 +115,21 @@ function AddPayment() {
             <input name="currency" id="currency"className="form_field" placeholder="currency" />
             <button type="submit" className="button_form">Submit</button>
         </form>
-
+        {/*
         <div className="carousel-container">
         {payments.map((payment, index) => (
             <PayementCard
                 key={index}
                 nameOf={payment.nameOf}
-                date={payment.date}
+                date={payment.date.toLocaleDateString()}
                 description={payment.description}
                 category={payment.category}
                 currency={payment.currency}
                 amount={payment.amount}
             />
         ))}
-        </div>
-
+        </div>*/}
+        
     </div>
     
 

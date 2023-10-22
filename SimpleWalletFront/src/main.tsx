@@ -20,6 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/register" element={<RegisterPage/>}/>
         <Route path="/login" element={<LoginPage/>}/>
         <Route path="/addPayment" element={<AddPayment/>}/>
+        <Route path="/pageGraph" element={<PageGraph/>}/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>,

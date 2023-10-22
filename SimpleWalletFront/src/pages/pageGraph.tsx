@@ -6,7 +6,8 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import Chart from "chart.js/auto";
 import 'chartjs-adapter-moment';
-import '../css/pageGraph.css'
+import '../css/pageGraph.css';
+import Layout from "./layout";
 
 function PageGraph() {
 
@@ -180,16 +181,17 @@ function PageGraph() {
 
     return (
       <div >
+        <Layout/>
         <canvas id="myChartCash"></canvas>
         <canvas id="myChartCard"></canvas>
 
-        <button onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
+        <button id= "deleteData"onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
 
         {showDeleteConfirmation && (
           <div className="confirmation-modal">
             <p>Are you sure you want to delete the data?</p>
-            <button onClick={deleteAllData}>Yes</button>
-            <button onClick={() => setShowDeleteConfirmation(false)}>No</button>
+            <button id= "deleteDataCheck" onClick={deleteAllData}>Yes</button>
+            <button  id= "deleteDataCheck" onClick={() => setShowDeleteConfirmation(false)}>No</button>
           </div>
         )}
       </div>
