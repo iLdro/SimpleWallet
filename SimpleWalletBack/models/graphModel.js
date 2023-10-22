@@ -10,7 +10,8 @@ const DataPointSchema = new mongoose.Schema({
     id: String,
     datas: [{
         y: Date,
-        x: Number
+        x: Number,
+        category: String,
     }]
 });
 const GraphModel = mongoose.model('DataGraph', DataPointSchema);

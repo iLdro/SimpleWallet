@@ -33,55 +33,141 @@ function PageGraph() {
       };
       
       
-    useEffect(() => {
-      axios.get('http://localhost:3000/getDataGraph?id=' + id)
-        .then((response) => {
-          console.log("RESPONSE FETCH DATA GRAPH");
-          console.log(response.data);
-          const backData = response.data;
-          const rawData = backData.datas.map((item: { y: string; x: number }) => [new Date(item.y), item.x]);
-          rawData.sort((a, b) => a[0].getTime() - b[0].getTime());
-          console.log("RAW DATA");
-          console.log(rawData);
+      useEffect(() => {
+        axios.get('http://localhost:3000/getDataGraph?id=' + id)
+          .then((response) => {
+            console.log("RESPONSE FETCH DATA GRAPH");
+            console.log(response.data);
+            const backData = response.data;
+      
+            // Separate the data into two arrays based on the category
+            let cashData = backData.datas
+            .filter((item: { y: string; x: number; category: string }) => item.category === 'Cash payment')
+            .map((item: { y: string; x: number }) => {
+              let date = new Date(item.y);
+              date.setHours(0, 0, 0, 0);
+              return [date, item.x];
+            });
 
-          let canvas = document.getElementById('myChart') as HTMLCanvasElement;
-          if (canvas) {
-            let ctx = canvas.getContext('2d');
-            if (ctx) {
-              if (window.myChart instanceof Chart) {
-                window.myChart.destroy();
-              }
+          let cardData = backData.datas
+            .filter((item: { y: string; x: number; category: string }) => item.category === 'Card payment')
+            .map((item: { y: string; x: number }) => {
+              let date = new Date(item.y);
+              date.setHours(0, 0, 0, 0);
+              return [date, item.x];
+            });
+            const groupByDate = (data: [Date, number][]) => {
+              const grouped: { [key: string]: number } = {};
+            
+              data.forEach(([date, payment]) => {
+                const dateStr = date.toISOString().split('T')[0]; // Get the date part of the ISO string
+            
+                if (grouped[dateStr]) {
+                  grouped[dateStr] += payment;
+                } else {
+                  grouped[dateStr] = payment;
+                }
+              });
+            
+              // Convert the grouped data back to an array
+              const result = Object.entries(grouped).map(([dateStr, totalPayment]) => [new Date(dateStr), totalPayment]);
+            
+              return result;
+            };
+            
+            cashData = groupByDate(cashData);
+            cardData = groupByDate(cardData);
+            // Sort the data by date
+            cashData.sort((a, b) => a[0].getTime() - b[0].getTime());
+            cardData.sort((a, b) => a[0].getTime() - b[0].getTime());
+      
+            console.log("CASH DATA");
+            console.log(cashData);
+            console.log("CARD DATA");
+            console.log(cardData);
+      
+            let canvasCash = document.getElementById('myChartCash') as HTMLCanvasElement;
+            let canvasCard = document.getElementById('myChartCard') as HTMLCanvasElement;
 
-              window.myChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                  labels: rawData.map((item: [Date, number]) => item[0]), // Dates
-                  datasets: [{
-                    label: 'My Dataset',
-                    data: rawData.map((item: [Date, number]) => item[1]), // Corresponding values
-                    fill: false,
-                    borderColor: 'rgb(75, 192, 192)',
-                    tension: 0.1
-                  }]
-                },
-                options: {
-                  scales: {
-                    x: {
-                      type: 'time',
-                      time: {
-                        unit: 'year'
+            if (canvasCash && canvasCard) {
+              let ctxCash = canvasCash.getContext('2d');
+              let ctxCard = canvasCard.getContext('2d');
+
+              if (ctxCash && ctxCard) {
+                if (window.myChartCash instanceof Chart) {
+                  window.myChartCash.destroy();
+                }
+                if (window.myChartCard instanceof Chart) {
+                  window.myChartCard.destroy();
+                }
+
+                window.myChartCash = new Chart(ctxCash, {
+                  type: 'line',
+                  data: {
+                    labels: cashData.map((item: [Date, number]) => item[0]), // Dates
+                    datasets: [{
+                      label: 'Cash Payment',
+                      data: cashData.map((item: [Date, number]) => item[1]), // Corresponding values
+                      fill: false,
+                      borderColor: 'rgb(75, 192, 192)',
+                      tension: 0.1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      x: {
+                        type: 'time',
+                        time: {
+                          unit: 'day',
+                          displayFormats: {
+                            day: 'MMM D' // Format for the x-axis labels
+                          }
+                        }
+                      },
+                      y: {
+                        min: 0
                       }
                     }
                   }
-                }
-              });
+                });
+                
+                window.myChartCard = new Chart(ctxCard, {
+                  type: 'line',
+                  data: {
+                    labels: cardData.map((item: [Date, number]) => item[0]), // Dates
+                    datasets: [{
+                      label: 'Card Payment',
+                      data: cardData.map((item: [Date, number]) => item[1]), // Corresponding values
+                      fill: false,
+                      borderColor: 'rgb(255, 99, 132)',
+                      tension: 0.1
+                    }]
+                  },
+                  options: {
+                    scales: {
+                      x: {
+                        type: 'time',
+                        time: {
+                          unit: 'day',
+                          displayFormats: {
+                            day: 'MMM D' // Format for the x-axis labels
+                          }
+                        }
+                      },
+                      y: {
+                        min: 0
+                      }
+                    }
+                  }
+                });
+                
+              }
             }
-          }
 
-        }, (error) => {
-          console.log(error);
-        });
-    }, []);
+          }, (error) => {
+            console.log(error);
+          });
+      }, []);
       
       /*
       const [minX, setMinX] = useState(Infinity);
@@ -224,7 +310,8 @@ function PageGraph() {
 
     return (
       <div style={graphStyle}>
-        <canvas id="myChart"></canvas>
+        <canvas id="myChartCash"></canvas>
+        <canvas id="myChartCard"></canvas>
 
         <button onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
 

@@ -7,6 +7,7 @@ import axios from "axios";
 function AddPayment() {
 
     const [payements, setPayements] = useState<FormData[]>([]);
+    const [category, setCategory] = useState("");
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -18,18 +19,22 @@ function AddPayment() {
             const dateParts = e.currentTarget.date.value.split("/");
             const dateObject = new Date(+dateParts[2], dateParts[1] - 1, +dateParts[0]);
             const payment = {
-                user : "652e8f2d0e15c03b283c8cc1",
-                amount : e.currentTarget.amount.value,
-                description : e.currentTarget.description.value,
-                date : e.currentTarget.date.value,
-                category : e.currentTarget.category.value,
-                currency : e.currentTarget.currency.value,
+                user: "652e8f2d0e15c03b283c8cc1",
+                amount: e.currentTarget.amount.value,
+                description: e.currentTarget.description.value,
+                date: e.currentTarget.date.value,
+                category: category, // Updated to use the selected category
+                currency: e.currentTarget.currency.value,
                 id: "652e8f2d0e15c03b283c8cc1",
-                datas: [{
+                datas: [
+                  {
                     y: dateObject,
                     x: e.currentTarget.amount.value,
-                }],
-            };
+                    category: category,
+                  },
+                ],
+              };
+              
 
             alert("Payment added");
         
@@ -81,7 +86,18 @@ function AddPayment() {
         <form className="grid-form" onSubmit={handleSubmit}>
             <input name="amount" id="amount" className="form_field" placeholder="amount" />
             <input name="description" id="description" className="form_field" type="text" placeholder="description" />
-            <input name="category" id="category" className="form_field" placeholder="category" />
+            <select
+                    name="category"
+                    id="category"
+                    className="form_field"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    >
+                    <option value="">Select Category</option>
+                    <option value="Cash payment">Cash payment</option>
+                    <option value="Card payment">Card payment</option>
+                    </select>
+
             <input name="date" id="date" className="form_field" placeholder="dd/mm/yyyy" />
             <input name="currency" id="currency"className="form_field" placeholder="currency" />
             <button type="submit" className="button_form">Submit</button>
