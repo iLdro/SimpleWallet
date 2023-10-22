@@ -25,6 +25,8 @@ function LoginPage() {
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
                 alert("User logged in successfully");
+                window.location.reload();
+                window.location.href = "http://localhost:5173/addPayment";
             } catch (error) {
                 alert("Error logging in user");
             }
