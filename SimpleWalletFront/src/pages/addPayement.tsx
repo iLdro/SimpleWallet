@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import Layout from "./layout";
 import '../css/addPayement.css'
 import FormData from "../models/PaymentData";
 import PayementCard from "../component/PayementCard";
@@ -49,6 +50,7 @@ function AddPayment() {
 
     return (
         <div id="container">
+
         <h1>Add a Payment</h1>
     
         <form className="grid-form" onSubmit={handleSubmit}>
