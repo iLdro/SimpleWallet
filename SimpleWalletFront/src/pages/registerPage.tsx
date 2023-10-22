@@ -1,4 +1,5 @@
 import axios from "axios";
+import Layout from "./layout";
 
 function registerPage() {
 
@@ -29,6 +30,7 @@ function registerPage() {
 
     return(
         <div>
+            <Layout/>
             <h1> Register Page</h1>
 
 
