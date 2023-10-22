@@ -18,13 +18,16 @@ function LoginPage() {
         else {
             user.email = user.email.toString();
             user.password = user.password.toString();
-            await axios.post('http://localhost:3000/users/login', user)
-                .then(function () {
-                    alert("User logged in successfully");
-                })
-                .catch(function () {
-                    alert("Error logging in user");
-                });
+            try {
+                const response = await axios.post('http://localhost:3000/users/login', user)
+                const token = response.data.token;
+                const userId = response.data.userId;
+                localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
+                alert("User logged in successfully");
+            } catch (error) {
+                alert("Error logging in user");
+            }
         }
     }
 

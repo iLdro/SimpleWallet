@@ -25,7 +25,7 @@ router.post('/register', async (req, res) => {
         });
           await newUser.save();
           res.status(201).json(newUser);
-          console.log('newUser:', newUser);
+          console.log({user: newUser, userId: newUser._id});
           
         }
       } catch (error) {
@@ -54,7 +54,11 @@ router.post('/register', async (req, res) => {
       res.cookie('token', token, { httpOnly: true });
       console.log('token:', token);
       console.log("Login successful")
-      res.status(200).json({ message: 'Login successful' });
+      res.status(200).json({ 
+        message: 'Login successful', 
+        token: token, 
+        user: user, 
+        userId: user._id });
     } 
 
   });

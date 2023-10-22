@@ -18,13 +18,12 @@ function registerPage() {
             user.userName = user.userName.toString();
             user.email = user.email.toString();
             user.password = user.password.toString();
-            await axios.post('http://localhost:3000/users/register', user)
-                .then(function () {
-                    alert("User registered successfully");
-                })
-                .catch(function () {
-                    alert("Error registering user");
-                });
+            try {
+                await axios.post('http://localhost:3000/users/register', user)
+                alert("User registered successfully");
+            } catch (error) {
+                alert("Error registering user");
+            }
         }
     }
 
