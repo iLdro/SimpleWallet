@@ -1,21 +1,33 @@
+import axios from 'axios';
+import Layout from './layout';
 import '../css/loginPage.css'
 
 function LoginPage() {
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const user = {
-            username: event.currentTarget.username.value,
+            email: event.currentTarget.email.value,
             password: event.currentTarget.password.value
         };
         alert("Login");
-        if (user.username == "" || user.password == "") {
+        if (user.email == "" || user.password == "") {
             alert("Please fill all the fields");
             return;
         }
         else {
-            user.username = user.username.toString();
+            user.email = user.email.toString();
             user.password = user.password.toString();
+            try {
+                const response = await axios.post('http://localhost:3000/users/login', user)
+                const token = response.data.token;
+                const userId = response.data.userId;
+                localStorage.setItem('token', token);
+                localStorage.setItem('userId', userId);
+                alert("User logged in successfully");
+            } catch (error) {
+                alert("Error logging in user");
+            }
         }
     }
 
@@ -23,13 +35,14 @@ function LoginPage() {
 
     return (
         <div>
+            <Layout/>
             <h1>Login Page</h1>
             
 
                 <div id="LogInForm">
                     <form onSubmit={handleSubmit}>
-                        <input type="text" name="username" placeholder='username' />
-                        <input type="text" name="password" placeholder='passworld'/>
+                        <input type="text" name="email" placeholder='email' />
+                        <input type="text" name="password" placeholder='password'/>
                         <button type="submit" >Submit</button>
                     </form>
                 </div>

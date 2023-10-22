@@ -1,5 +1,6 @@
 import { useState } from "react";
 import React from "react";
+import Layout from "./layout";
 import '../css/addPayement.css'
 import FormData from "../models/PaymentData";
 
@@ -52,16 +53,17 @@ function AddPayment() {
 
     return (
         <div id="container">
-        <h1>Add a Payment</h1>
-    
-        <form className="grid-form" onSubmit={handleSubmit}>
-            <input name="amount" id="amount" className="form_field" placeholder="amount" />
-            <input name="description" id="description" className="form_field" type="text" placeholder="description" />
-            <input name="category" id="category" className="form_field" placeholder="category" />
-            <input name="date" id="date" className="form_field" placeholder="dd/mm/yyyy" />
-            <input name="currency" id="currency"className="form_field" placeholder="currency" />
-            <button type="submit" className="button_form">Submit</button>
-        </form>
+            <Layout/>
+            <h1>Add a Payment</h1>
+        
+            <form className="grid-form" onSubmit={handleSubmit}>
+                <input name="amount" id="amount" className="form_field" placeholder="amount" />
+                <input name="description" id="description" className="form_field" type="text" placeholder="description" />
+                <input name="category" id="category" className="form_field" placeholder="category" />
+                <input name="date" id="date" className="form_field" placeholder="dd/mm/yyyy" />
+                <input name="currency" id="currency"className="form_field" placeholder="currency" />
+                <button type="submit" className="button_form">Submit</button>
+            </form>
     </div>
     
 
