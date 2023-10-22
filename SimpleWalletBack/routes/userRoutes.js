@@ -4,29 +4,40 @@ const bcrypt = require('bcrypt');
 const UserModel = require('../models/userModel');
 const DataGraph = require('../models/graphModel');
 const cors = require('cors');
+const { verifyToken, generateToken } = require('../utils/jwt');
 
-router.post('/CreateUser', async (req, res) => {
+router.post('/register', async (req, res) => {
     try {
       console.log('req.body:', req.body)
       const { userName, email, password } = req.body;
+      const user = await UserModel.findOne({ email });
 
-      const saltRounds = 10;
-      const hashedPassword = await bcrypt.hash(password, saltRounds);
+      if (user) {
+        console.log('email already exists')
+        return res.status(400).json({ error: 'Email already exists' });
+      }
+      else {
+        const saltRounds = 10;
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+  
+        const newUser = new UserModel({
+          userName: userName,
+          email: email,
+          password: hashedPassword
+        });
+          await newUser.save();
+          res.status(201).json(newUser);
+          console.log({user: newUser, userId: newUser._id});
+          
+        }
+      } catch (error) {
+        console.error('Error creating a user:', error);
+        res.status(500).json({ error: 'Error creating a user' });
+      }
 
-      const newUser = new UserModel({
-        userName,
-        email,
-        password: hashedPassword
-      });
-      await newUser.save();
-      res.status(201).json(newUser);
-    } catch (error) {
-      console.error('Error creating a user:', error);
-      res.status(500).json({ error: 'Error creating a user' });
-    }
   });
 
-router.post('/Login', async (req, res) => {
+  router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
     const user = await UserModel.findOne({ email });
@@ -41,8 +52,15 @@ router.post('/Login', async (req, res) => {
       return res.status(400).json({ error: 'Invalid password' });
     }
     else {
-      return res.status(200).json({ message: 'Logged in successfully' });
-      //generate token 
+      const token = generateToken(user);
+      res.cookie('token', token, { httpOnly: true });
+      console.log('token:', token);
+      console.log("Login successful")
+      res.status(200).json({ 
+        message: 'Login successful', 
+        token: token, 
+        user: user, 
+        userId: user._id });
     } 
 
 });

@@ -3,13 +3,14 @@ const app = express();
 const bodyParser = require('body-parser');
 const port = 3000;
 const cors = require('cors');
+const cookieParser = require('cookie-parser');
+
 const db = require('./config/database');
 const UserModel = require('./models/userModel');
 const userRoutes = require('./routes/userRoutes');
 const DataGraph = require('./models/graphModel');
-
-app.use(bodyParser.json());
-
+const testRoutes = require('./routes/testRoutes');
+const cors = require('cors');
 
 app.use(cors({
     origin: (origin, callback) => {
@@ -21,13 +22,16 @@ app.use(cors({
       }
     },
 }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-app.use('/users/CreateUser', userRoutes);
+app.use('/users', userRoutes);
+app.use('/test', testRoutes);
 
 
 

@@ -1,5 +1,5 @@
 interface FormData {
-    user: string;
+    nameOf: string;
     amount: number;
     description: string;
     date: string;
