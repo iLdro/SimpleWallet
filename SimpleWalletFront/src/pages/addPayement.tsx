@@ -84,8 +84,10 @@ function AddPayment() {
         <h1>Add a Payment</h1>
     
         <form className="grid-form" onSubmit={handleSubmit}>
-            <input name="amount" id="amount" className="form_field" placeholder="amount" />
+            <input name="amount" id="amount" className="form_field amount_field" placeholder="amount" />
+
             <input name="description" id="description" className="form_field" type="text" placeholder="description" />
+            
             <select
                     name="category"
                     id="category"
@@ -93,7 +95,7 @@ function AddPayment() {
                     value={category}
                     onChange={(e) => setCategory(e.target.value)}
                     >
-                    <option value="">Select Category</option>
+                    <option value="">Select category</option>
                     <option value="Cash payment">Cash payment</option>
                     <option value="Card payment">Card payment</option>
                     </select>

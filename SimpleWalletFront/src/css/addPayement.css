@@ -26,8 +26,9 @@ h1 {
 
 
 label{
-    font-size: 2em;
+    font-size: 1.3em;
     font-weight: bold;
+
 }
 
 
@@ -43,7 +44,7 @@ label{
     background-color: transparent;
     transition: border-color 0.2s;
 
-    /* Remove the & selector */
+   
 }
 
 .form_field::placeholder {
@@ -62,7 +63,12 @@ label{
 
 
 .form_field + .form_field {
-    margin-top: 3em; /* Ajustez la valeur selon l'espace que vous souhaitez entre les champs */
+    margin-top: 1.5em; /* Ajustez la valeur selon l'espace que vous souhaitez entre les champs */
+    margin-bottom: 1.5em;
+}
+.amount_field {
+    width: 70em; /* Set the desired width for the amount input field */
+    margin-bottom: 1.5em;
 }
 
 
@@ -79,3 +85,4 @@ label{
     cursor: pointer;
     transition: background-color 0.2s;
 }
+
