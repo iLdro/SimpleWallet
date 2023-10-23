@@ -1,4 +1,4 @@
-#LogInForm input {
+#RegisterForm input {
     
     margin: 1em;
     width: 30%;
@@ -20,7 +20,7 @@
     transition: border-color 0.2s;
 }
 
-#LoginButton{
+#RegisterButton{
     
     width: 5em;
     height: 2.5em;

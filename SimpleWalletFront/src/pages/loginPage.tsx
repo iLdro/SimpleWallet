@@ -25,6 +25,8 @@ function LoginPage() {
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
                 alert("User logged in successfully");
+                window.location.reload();
+                window.location.href = "http://localhost:5173/addPayment";
             } catch (error) {
                 alert("Error logging in user");
             }
@@ -43,7 +45,7 @@ function LoginPage() {
                     <form onSubmit={handleSubmit}>
                         <input type="text" name="email" placeholder='email' />
                         <input type="text" name="password" placeholder='password'/>
-                        <button type="submit" >Submit</button>
+                        <button id="LoginButton" type="submit" >Submit</button>
                     </form>
                 </div>
             

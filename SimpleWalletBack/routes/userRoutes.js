@@ -2,7 +2,19 @@ const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcrypt');
 const UserModel = require('../models/userModel');
+const DataGraph = require('../models/graphModel');
+const cors = require('cors');
 const { verifyToken, generateToken } = require('../utils/jwt');
+router.use(cors({
+  origin: (origin, callback) => {
+    const allowedOrigins = ['http://localhost:5173'];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+}));
 
 router.post('/register', async (req, res) => {
     try {
@@ -61,6 +73,8 @@ router.post('/register', async (req, res) => {
         userId: user._id });
     } 
 
-  });
-  
-  module.exports = router;
+});
+
+
+
+module.exports = router;

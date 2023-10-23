@@ -18,4 +18,21 @@
 }
 
 
+#deleteDataCheck{
+  margin-top: 3em;
+  width: 6em;
+  height: 2.5em;
+  border-radius: 1em;
+  background-color: #450c66;
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+  margin-left: 1em;
+  margin-right:1em ;
+}
+
+
 
