@@ -32,7 +32,7 @@ function AddPayment() {
                 date: dateObject,
                 category: category, 
                 currency: e.currentTarget.currency.value,
-                id: "652e8f2d0e15c03b283c8cc1",
+                id: userId,
                 datas: [
                   {
                     y: dateObject,
@@ -78,7 +78,7 @@ function AddPayment() {
         
 
             setPayments([...payments, payment]);
-            axios.post('http://localhost:3000/SaveGraph', payment)
+            axios.post('http://localhost:3000/graphs/SaveGraph', payment)
             .then((response) => {
                 console.log("RESPONSE")
                 console.log(response);

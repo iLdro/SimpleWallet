@@ -11,7 +11,7 @@ import Layout from "./layout";
 
 function PageGraph() {
 
-      const id = "652e8f2d0e15c03b283c8cc1";
+      const id = localStorage.getItem("userId");
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
    
    
@@ -26,7 +26,7 @@ function PageGraph() {
       
       
       useEffect(() => {
-        axios.get('http://localhost:3000/getDataGraph?id=' + id)
+        axios.get('http://localhost:3000/graphs/getDataGraph?id=' + id)
           .then((response) => {
             console.log("RESPONSE FETCH DATA GRAPH");
             console.log(response.data);
@@ -163,7 +163,7 @@ function PageGraph() {
       
      
     const deleteAllData = () => {
-      axios.post(`http://localhost:3000/clearData/${id}`)
+      axios.post(`http://localhost:3000/graphs/clearData/${id}`)
         .then((response) => {
           console.log("RESPONSE CLEAR DATA");
           console.log(response);
