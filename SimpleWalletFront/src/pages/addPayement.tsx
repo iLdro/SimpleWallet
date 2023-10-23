@@ -85,9 +85,13 @@ function AddPayment() {
             }, (error) => {
                 console.log(error);
             });
+           
         }
     }
-
+    const handleEraseCards = () => {
+        // Set payments state to an empty array to erase all cards
+        setPayments([]);
+    };
     return (
         <div id="container">
         <Layout/>  
@@ -115,20 +119,23 @@ function AddPayment() {
             <input name="currency" id="currency"className="form_field" placeholder="currency" />
             <button type="submit" className="button_form">Submit</button>
         </form>
-        {/*
+        
         <div className="carousel-container">
-        {payments.map((payment, index) => (
-            <PayementCard
-                key={index}
-                nameOf={payment.nameOf}
-                date={payment.date.toLocaleDateString()}
-                description={payment.description}
-                category={payment.category}
-                currency={payment.currency}
-                amount={payment.amount}
-            />
-        ))}
-        </div>*/}
+            {payments.map((payment, index) => (
+                <div key={index} className="payment-card">
+                <PayementCard
+                    key={index}
+                    nameOf={payment.nameOf}
+                    date={payment.date.toLocaleDateString()}
+                    description={payment.description}
+                    category={payment.category}
+                    currency={payment.currency}
+                    amount={payment.amount}
+                />
+                </div>
+            ))}
+        </div>
+            <button id="deleteDataCheck" onClick={handleEraseCards}>Erase cards ? </button>
         
     </div>
     

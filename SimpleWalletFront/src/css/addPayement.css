@@ -86,11 +86,11 @@ label{
     transition: background-color 0.2s;
 }
 
-.carousel-container{
+.carousel-container {
     width: 80%;
-    height: 300px;
     display: flex;
-    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
     align-items: center;
-    overflow: hidden;
+    margin-top: 2em; /* Add some margin between rows */
 }
