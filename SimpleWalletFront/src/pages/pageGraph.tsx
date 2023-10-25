@@ -1,5 +1,4 @@
 import React from "react";
-import { ResponsiveLine } from "@nivo/line";
 //import Graph from "../component/Graph"; 
 import PropType from 'prop-types'
 import axios from 'axios';
@@ -9,12 +8,15 @@ import 'chartjs-adapter-moment';
 import '../css/pageGraph.css';
 import Layout from "./layout";
 
-function PageGraph() {
 
-      const id = localStorage.getItem("userId");
+function PageGraph() {
+    
+    const id = localStorage.getItem("userId");
+    
     const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
    
-   
+    const [cashData, setCashData] = useState<[Date, number][]>([]);
+    const [cardData, setCardData] = useState<[Date, number][]>([]);
 
     const [rawData, setRawData] = useState<[Date, number][]>([]);
     console.log("RAW DATA")
@@ -30,7 +32,8 @@ function PageGraph() {
           .then((response) => {
             console.log("RESPONSE FETCH DATA GRAPH");
             console.log(response.data);
-            const backData = response.data;
+            const backData = response.data; 
+            setRawData(backData.datas);
       
             // Separate the data into two arrays based on the category
             let cashData = backData.datas
@@ -77,7 +80,8 @@ function PageGraph() {
             console.log(cashData);
             console.log("CARD DATA");
             console.log(cardData);
-      
+            setCashData(cashData);
+            setCardData(cardData);
             let canvasCash = document.getElementById('myChartCash') as HTMLCanvasElement;
             let canvasCard = document.getElementById('myChartCard') as HTMLCanvasElement;
 
@@ -155,11 +159,12 @@ function PageGraph() {
                 
               }
             }
-
+            
+           
           }, (error) => {
             console.log(error);
           });
-      }, []);
+      }, [ ]);
       
      
     const deleteAllData = () => {
@@ -177,16 +182,30 @@ function PageGraph() {
     const handleDeleteClick = () => {
       setShowDeleteConfirmation(true);
     };
-    
 
     return (
-      <div >
+      <div>
         <Layout/>
         <canvas id="myChartCash"></canvas>
         <canvas id="myChartCard"></canvas>
+        <div id="print">
+          <h2>Cash Data</h2>
 
-        <button id= "deleteData"onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
-
+          <ul>
+            {cashData.map((item, index) => (
+              <li key={index}>{`Date: ${item[0]}, Amount: ${item[1]}`}</li>
+            ))}
+          </ul>
+      
+          <h2>Card Data</h2>
+          <ul>
+            {cardData.map((item, index) => (
+              <li key={index}>{`Date: ${item[0]}, Amount: ${item[1]}`}</li>
+            ))}
+          </ul>
+        </div>
+        <button id= "deleteData" onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
+    
         {showDeleteConfirmation && (
           <div className="confirmation-modal">
             <p>Are you sure you want to delete the data?</p>
@@ -194,7 +213,9 @@ function PageGraph() {
             <button  id= "deleteDataCheck" onClick={() => setShowDeleteConfirmation(false)}>No</button>
           </div>
         )}
+    
       </div>
     );
+    
 }
 export default PageGraph;
