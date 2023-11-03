@@ -43,7 +43,7 @@ function AddPayment() {
               };
               
 
-            alert("Payment added");
+            
         
             
             if (payment.nameOf == "" || payment.user == "" || payment.amount == 0 || payment.description == "" || payment.category == "" || payment.currency == "") {
@@ -93,51 +93,50 @@ function AddPayment() {
         setPayments([]);
     };
     return (
-        <div id="container">
-        <Layout/>  
-        <h1>Add a Payment</h1>
-        
-        <form className="grid-form" onSubmit={handleSubmit}>
-            <input name="nameOf" id="nameOf" className="form_field" placeholder="name" />
-            <input name="amount" id="amount" className="form_field amount_field" placeholder="amount" />
+        <div>
+            <Layout/>  
+            {/* <div className="container"> */}
 
-            <input name="description" id="description" className="form_field" type="text" placeholder="description" />
+                <h1>Add a Payment</h1>
             
-            <select
-                    name="category"
-                    id="category"
-                    className="form_field"
-                    value={category}
-                    onChange={(e) => setCategory(e.target.value)}
-                    >
-                    <option value="">Select category</option>
-                    <option value="Cash payment">Cash payment</option>
-                    <option value="Card payment">Card payment</option>
+                <form className="grid-form" onSubmit={handleSubmit}>
+                    <input name="nameOf" id="nameOf" className="form_field" placeholder="name" />
+                    <input name="amount" id="amount" className="form_field amount_field" placeholder="amount" />
+                    <input name="description" id="description" className="form_field" type="text" placeholder="description" />
+                    <select
+                        name="category"
+                        id="category"
+                        className="form_field"
+                        value={category}
+                        onChange={(e) => setCategory(e.target.value)}
+                        >
+                        <option value="">Select category</option>
+                        <option value="Cash payment">Cash payment</option>
+                        <option value="Card payment">Card payment</option>
                     </select>
-
-            <input name="date" id="date" className="form_field" placeholder="dd/mm/yyyy" />
-            <input name="currency" id="currency"className="form_field" placeholder="currency" />
-            <button type="submit" className="button_form">Submit</button>
-        </form>
-        
-        <div className="carousel-container">
-            {payments.map((payment, index) => (
-                <div key={index} className="payment-card">
-                <PayementCard
-                    key={index}
-                    nameOf={payment.nameOf}
-                    date={payment.date.toLocaleDateString()}
-                    description={payment.description}
-                    category={payment.category}
-                    currency={payment.currency}
-                    amount={payment.amount}
-                />
+                    <input name="date" id="date" className="form_field" placeholder="dd/mm/yyyy" />
+                    <input name="currency" id="currency"className="form_field" placeholder="currency" />
+                    <button type="submit" className="button_form">Submit</button>
+                </form>
+            
+                <div className="carousel-container">
+                    {payments.map((payment, index) => (
+                        <div key={index} className="payment-card">
+                        <PayementCard
+                            key={index}
+                            nameOf={payment.nameOf}
+                            date={payment.date.toLocaleDateString()}
+                            description={payment.description}
+                            category={payment.category}
+                            currency={payment.currency}
+                            amount={payment.amount}
+                        />
+                        </div>
+                    ))}
                 </div>
-            ))}
+                <button id="deleteCardCheck" onClick={handleEraseCards}>Erase cards ? </button>
+            {/* </div> */}
         </div>
-            <button id="deleteDataCheck" onClick={handleEraseCards}>Erase cards ? </button>
-        
-    </div>
     
 
     )

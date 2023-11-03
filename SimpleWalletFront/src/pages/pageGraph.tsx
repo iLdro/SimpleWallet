@@ -7,6 +7,7 @@ import Chart from "chart.js/auto";
 import 'chartjs-adapter-moment';
 import '../css/pageGraph.css';
 import Layout from "./layout";
+import PaymentPrint from "../component/PaymentPrint";
 
 
 function PageGraph() {
@@ -82,12 +83,12 @@ function PageGraph() {
             console.log(cardData);
             setCashData(cashData);
             setCardData(cardData);
-            let canvasCash = document.getElementById('myChartCash') as HTMLCanvasElement;
-            let canvasCard = document.getElementById('myChartCard') as HTMLCanvasElement;
+            const canvasCash = document.getElementById('myChartCash') as HTMLCanvasElement;
+            const canvasCard = document.getElementById('myChartCard') as HTMLCanvasElement;
 
             if (canvasCash && canvasCard) {
-              let ctxCash = canvasCash.getContext('2d');
-              let ctxCard = canvasCard.getContext('2d');
+              const ctxCash = canvasCash.getContext('2d');
+              const ctxCard = canvasCard.getContext('2d');
 
               if (ctxCash && ctxCard) {
                 if (window.myChartCash instanceof Chart) {
@@ -186,34 +187,32 @@ function PageGraph() {
     return (
       <div>
         <Layout/>
-        <canvas id="myChartCash"></canvas>
-        <canvas id="myChartCard"></canvas>
-        <div id="print">
-          <h2>Cash Data</h2>
-
-          <ul>
-            {cashData.map((item, index) => (
-              <li key={index}>{`Date: ${item[0]}, Amount: ${item[1]}`}</li>
+          <div className="container">
+          <canvas id="myChartCash"></canvas>
+          <canvas id="myChartCard"></canvas>
+          <div id="print">
+            <h2>Cash Data</h2>
+            {cashData.map((item, index) => ( 
+            <PaymentPrint key={index} date={item[0]} amount={item[1]} />
             ))}
-          </ul>
       
-          <h2>Card Data</h2>
-          <ul>
-            {cardData.map((item, index) => (
-              <li key={index}>{`Date: ${item[0]}, Amount: ${item[1]}`}</li>
-            ))}
-          </ul>
-        </div>
-        <button id= "deleteData" onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
-    
-        {showDeleteConfirmation && (
-          <div className="confirmation-modal">
-            <p>Are you sure you want to delete the data?</p>
-            <button id= "deleteDataCheck" onClick={deleteAllData}>Yes</button>
-            <button  id= "deleteDataCheck" onClick={() => setShowDeleteConfirmation(false)}>No</button>
+      
+        
+            <h2>Card Data</h2>   
+              {cardData.map((item, index) => (
+                <PaymentPrint key={index} date={item[0]} amount={item[1]} />
+              ))}
           </div>
-        )}
-    
+          <button id= "deleteData" onClick={handleDeleteClick}>DELETE ALL THE DATA</button>
+      
+          {showDeleteConfirmation && (
+            <div className="confirmation-modal">
+              <p>Are you sure you want to delete the data?</p>
+              <button id= "deleteDataCheck" onClick={deleteAllData}>Yes</button>
+              <button  id= "deleteDataCheck" onClick={() => setShowDeleteConfirmation(false)}>No</button>
+            </div>
+          )}
+        </div>
       </div>
     );
     

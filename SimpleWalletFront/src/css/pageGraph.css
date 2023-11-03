@@ -1,3 +1,10 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
 canvas {
     border: 1px solid #ccc;
     margin: 1em;
@@ -7,6 +14,7 @@ canvas {
     width: 800px;
     height: 400px;
     border: 1px solid #ccc;
+    
 }
 
 
@@ -15,7 +23,7 @@ canvas {
     width: 15em;
     height: 2.5em;
     border-radius: 1em;
-    background-color: #450c66;
+    background-color: #adbee6;
     color: white;
     font-size: 1.5em;
     font-weight: bold;
@@ -29,8 +37,8 @@ canvas {
     width: 6em;
     height: 2.5em;
     border-radius: 1em;
-    background-color: #450c66;
-    color: white;
+    background-color: #adbee6;
+    color: #adbee6;
     font-size: 1.5em;
     font-weight: bold;
     border: none;
@@ -56,8 +64,8 @@ li{
     box-sizing: border-box;
     overflow: hidden;
     transition: 0.5s;
-    border-color: #450c66;
-    color: #fff;
+    border-color: #adbee6;
+    color: #adbee6;
 }
 li:hover {
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
@@ -65,4 +73,5 @@ li:hover {
 
 #print h2{
     margin-top: 60px;
+    color: #adbee6;
 }

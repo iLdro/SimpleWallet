@@ -1,6 +1,6 @@
+
 #RegisterForm input {
     
-    margin: 1em;
     width: 30%;
     height: 100%;
     display: flex;
@@ -11,13 +11,15 @@
     font-family: inherit;
     width:30em;
     border: 0;
-    border-bottom: 2px solid #450c66;
+    border-bottom: 2px solid #adbee6;
     outline: 0;
     font-size: 1.3rem;
     color: white;
     padding: 7px 0;
     background-color: transparent;
     transition: border-color 0.2s;
+    padding-top: 2%;
+    margin-top: 6%;
 }
 
 #RegisterButton{
@@ -25,13 +27,35 @@
     width: 5em;
     height: 2.5em;
     border-radius: 10px;
-    background-color: #450c66;
+    background-color: #adbee6;
     color: white;
     font-size: 1.5em;
     font-weight: bold;
     border: none;
     cursor: pointer;
     transition: background-color 0.2s;
-    margin-left: 1em;
-    margin-right:1em ;
+    margin-top: 6%;
+}
+#register{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    border-radius: 10px;
+    padding-top: 5%;
+}
+
+#register h1 {
+    color: #adbee6;
+    font-size: 5em;
+    line-height: 1.1;
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    margin-top: 0.5em;
+    justify-content: center; 
+    margin : auto;  
+    padding-bottom: 2%;
+    margin-top: 5%;
 }

@@ -10,7 +10,6 @@ function LoginPage() {
             email: event.currentTarget.email.value,
             password: event.currentTarget.password.value
         };
-        alert("Login");
         if (user.email == "" || user.password == "") {
             alert("Please fill all the fields");
             return;
@@ -24,7 +23,7 @@ function LoginPage() {
                 const userId = response.data.userId;
                 localStorage.setItem('token', token);
                 localStorage.setItem('userId', userId);
-                alert("User logged in successfully");
+                
                 window.location.reload();
                 window.location.href = "http://localhost:5173/addPayment";
             } catch (error) {
@@ -38,16 +37,19 @@ function LoginPage() {
     return (
         <div>
             <Layout/>
-            <h1>Login Page</h1>
-            
+            <div id="login">
 
-                <div id="LogInForm">
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" name="email" placeholder='email' />
-                        <input type="text" name="password" placeholder='password'/>
-                        <button id="LoginButton" type="submit" >Submit</button>
-                    </form>
-                </div>
+                <h1>Log in</h1>
+                
+
+                    <div id="LogInForm">
+                        <form onSubmit={handleSubmit}>
+                            <input type="text" name="email" placeholder='email' />
+                            <input type="password" name="password" placeholder='password'/>
+                            <button id="LoginButton" type="submit" >Submit</button>
+                        </form>
+                    </div>
+            </div>
             
         </div>
     );

@@ -20,7 +20,7 @@ function registerPage() {
             user.password = user.password.toString();
             try {
                 await axios.post('http://localhost:3000/users/register', user)
-                alert("User registered successfully");
+                console.lo("User registered successfully");
             } catch (error) {
                 alert("Error registering user");
             }
@@ -30,17 +30,20 @@ function registerPage() {
     return(
         <div>
             <Layout/>
-            <h1> Register Page</h1>
+            <div id="register">
+
+                <h1> Register Page</h1>
 
 
-                <div id="RegisterForm">
-                    <form onSubmit={handleSubmit}>
-                        <input type="text" name="username" placeholder='username' />
-                        <input type="text" name="mail" placeholder='mail' />
-                        <input type="text" name="password" placeholder='password'/>
-                        <button id = "RegisterButton"type="submit">Submit</button>
-                    </form>
-                </div>
+                    <div id="RegisterForm">
+                        <form onSubmit={handleSubmit}>
+                            <input type="text" name="username" placeholder='username' />
+                            <input type="text" name="mail" placeholder='mail' />
+                            <input type="password" name="password" placeholder='password'/>
+                            <button id = "RegisterButton"type="submit">Submit</button>
+                        </form>
+                    </div>
+            </div>
             
         </div>
     );

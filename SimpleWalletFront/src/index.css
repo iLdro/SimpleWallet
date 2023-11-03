@@ -5,7 +5,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background: linear-gradient(to top, #c58ae7 0%, #450c66 100%);
+  background-color: whitesmoke;
 
 
   font-synthesis: none;
@@ -15,19 +15,7 @@
   -webkit-text-size-adjust: 100%;
 }
 
-a ,#logout{
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-  background-color: #000000;
-  border-radius: 5px;
-  padding: 10px;
-  margin-left: 2em;
-  margin-right: 2em;
-}
-a:hover {
-  color: #535bf2;
-}
+
 nav{
   font-size: 1.5em;
 }
@@ -36,10 +24,5 @@ body {
   display: flex;
   min-width: 320px;
   min-height: 100vh;
-}
-
-h1 {
-  font-size: 5em;
-  line-height: 1.1;
 }
 

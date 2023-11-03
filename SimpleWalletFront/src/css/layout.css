@@ -1,0 +1,42 @@
+.layout-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+    border-bottom: 1px solid #adbee6;
+    height: 5em;
+}
+
+.Links{
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+}
+
+a{
+    text-decoration: none;
+    margin-left: 3em;
+    color: #adbee6;      
+}
+
+nav{
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+}
+
+.rigth-part{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.left-part{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    margin-left: 60%;
+}
